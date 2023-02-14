@@ -9,16 +9,23 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 // 클래스 안에 있는 모든 @Test에 대해 일괄적으로 적용. (아래는 언더바를 공백으로 치환하는 규칙)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)			// 한 클래스내부에서 해당 테스트의 메서드를 모두 처리(각 인스턴스를 생성하지 않고)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)	// 테스트 메서드 순서 결정
 class StudyTest {
+	@Order(3)
 	@Test
 	@DisplayName("테스트")		// 해당 테스트의 이름을 변경
 	@Tag("태그")
@@ -26,6 +33,7 @@ class StudyTest {
 		System.out.println("TEST");
 	}
 
+	@Order(1)
 	@Test		
 	@customTag
 	void create_test() {
@@ -34,6 +42,7 @@ class StudyTest {
 		System.out.println("createTest");
 	}
 	
+	@Order(2)
 	@RepeatedTest(value = 5, name ="{displayName}, {currentRepetition} of {totalRepetitions}")
 	@DisplayName("반복 테스트")
 	void repeat_test() {

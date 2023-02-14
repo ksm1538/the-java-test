@@ -11,12 +11,17 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import java.time.Duration;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.condition.EnabledOnJre;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.JRE;
 import org.junit.jupiter.api.condition.OS;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)			// 한 클래스내부에서 해당 테스트의 메서드를 모두 처리(각 인스턴스를 생성하지 않고)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)	// 테스트 메서드 순서 결정
 class PersonTest {
 
 	@Test
